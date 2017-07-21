@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+
+    <EditText
+        android:id="@+id/full_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="Full Name"
+        style="@style/DialogEditText"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/mobile_number_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="Mobile Number"
+        style="@style/DialogEditText"
+        android:layout_marginTop="4dp"
+        android:textColor="#000000"
+        android:layout_marginBottom="10dp"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/pincode_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="Pin Code"
+        style="@style/DialogEditText"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="4dp"
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/house_no_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="Flat / House No. / Building"
+        style="@style/DialogEditText"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="#000000"/>
+
+    <EditText
+        android:id="@+id/locality_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="Colony / Locality"
+        style="@style/DialogEditText"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="4dp"
+        android:textColor="#000000"/>
+
+    <EditText
+        android:id="@+id/city_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="City"
+        style="@style/DialogEditText"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="4dp"
+        android:textColor="#000000"/>
+
+    <EditText
+        android:id="@+id/state_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="State"
+        style="@style/DialogEditText"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="4dp"
+        android:textColor="#000000"/>
+
+</LinearLayout>

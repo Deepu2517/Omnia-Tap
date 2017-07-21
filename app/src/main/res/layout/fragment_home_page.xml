@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="in.desireplace.waytogo.fragments.HomePageFragment">
+
+    <Button
+        android:id="@+id/new_offers_images"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:background="#6969"
+        android:text="Image" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:columnCount="1">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/request_pick_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Request Pick Up"
+                android:padding="26dp"/>
+
+            <Space
+                android:layout_height="wrap_content"
+                android:layout_width="30dp"/>
+
+            <Button
+                android:id="@+id/store_drop_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Store Drop"
+                android:padding="26dp"
+                android:paddingStart="40dp"
+                tools:ignore="RtlCompat" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/water_supply_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Water Supply"
+                android:padding="26dp"
+                android:paddingEnd="40dp"
+                tools:ignore="RtlCompat" />
+
+            <Space
+                android:layout_height="wrap_content"
+                android:layout_width="30dp"/>
+
+            <Button
+                android:id="@+id/customer_care_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Support"
+                android:paddingLeft="40dp"
+                android:paddingRight="50dp"
+                android:paddingTop="26dp"
+                android:paddingBottom="26dp"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+
+    </GridLayout>
+</LinearLayout>
