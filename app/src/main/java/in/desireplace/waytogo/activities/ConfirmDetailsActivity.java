@@ -94,6 +94,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
         dialog.setMessage("please wait...");
         dialog.setCancelable(false);
 
+        //firebase auth
         mAuth = FirebaseAuth.getInstance();
 
         String firebasePath = "users/" + mAuth.getCurrentUser().getUid();
