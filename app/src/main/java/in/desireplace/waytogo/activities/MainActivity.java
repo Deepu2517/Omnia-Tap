@@ -1,9 +1,9 @@
 package in.desireplace.waytogo.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.instamojo.android.Instamojo;
 
 import in.desireplace.waytogo.Constants;
 import in.desireplace.waytogo.R;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         initializeListeners();
+        Instamojo.initialize(this);
     }
 
     private void initializeListeners() {
@@ -52,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        Log.d(Constants.TAG, "Exiting Main Activity");
     }
 
     @Override

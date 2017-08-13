@@ -6,18 +6,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 
 import in.desireplace.waytogo.R;
 import in.desireplace.waytogo.activities.LoginActivity;
 import in.desireplace.waytogo.activities.SavedAddressesActivity;
+import in.desireplace.waytogo.activities.YourOrdersActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,8 +46,15 @@ public class ProfilePageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_profile_page, container, false);
+        TextView yourOrdersTextView = (TextView) rootView.findViewById(R.id.your_orders_text_view);
         TextView savedAddressesTextView = (TextView) rootView.findViewById(R.id.saved_addresses_text_view);
         TextView logOutTextView = (TextView) rootView.findViewById(R.id.log_out_text_view);
+        yourOrdersTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), YourOrdersActivity.class));
+            }
+        });
         savedAddressesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +67,7 @@ public class ProfilePageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
+                LoginManager.getInstance().logOut();
                 getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 Intent i = new Intent(getContext(), LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

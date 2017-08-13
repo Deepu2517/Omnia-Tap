@@ -4,14 +4,21 @@ import com.google.firebase.database.Exclude;
 
 public class YourOrders {
 
+    private String mOrderNumber;
     private String mServiceType;
     private String mFullName;
     private String mMobileNumber;
-    private String mPinCode;
     private String mHouseNumber;
     private String mLocality;
-    private String mCity;
-    private String mState;
+    private String mLandmark;
+    private String mOrderDate;
+    private String mOrderTime;
+
+    private String mShirts;
+    private String mTrousers;
+    private String mOthers;
+
+    private String mCans;
 
     private String mKey;
 
@@ -19,15 +26,40 @@ public class YourOrders {
         //Required For Data Serializations.
     }
 
-    public YourOrders(String serviceType, String fullName, String mobileNumber, String pinCode, String houseNumber, String locality, String city, String state) {
+    public YourOrders(String orderNumber, String serviceType, String fullName, String mobileNumber, String houseNumber, String locality, String landmark, String shirts, String trousers, String others, String orderDate, String orderTime) {
+        mOrderNumber = orderNumber;
         mServiceType = serviceType;
         mFullName = fullName;
         mMobileNumber = mobileNumber;
-        mPinCode = pinCode;
         mHouseNumber = houseNumber;
         mLocality = locality;
-        mCity = city;
-        mState = state;
+        mLandmark = landmark;
+        mShirts = shirts;
+        mTrousers = trousers;
+        mOthers = others;
+        mOrderDate = orderDate;
+        mOrderTime = orderTime;
+    }
+
+    public YourOrders(String orderNumber, String serviceType, String fullName, String mobileNumber, String houseNumber, String locality, String landmark, String cans, String orderDate, String orderTime) {
+        mOrderNumber = orderNumber;
+        mServiceType = serviceType;
+        mFullName = fullName;
+        mMobileNumber = mobileNumber;
+        mHouseNumber = houseNumber;
+        mLocality = locality;
+        mLandmark = landmark;
+        mCans = cans;
+        mOrderDate = orderDate;
+        mOrderTime = orderTime;
+    }
+
+    public String getOrderNumber() {
+        return mOrderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.mOrderNumber = orderNumber;
     }
 
     public String getServiceType() {
@@ -54,14 +86,6 @@ public class YourOrders {
         this.mMobileNumber = mobileNumber;
     }
 
-    public String getPinCode() {
-        return mPinCode;
-    }
-
-    public void setPinCode(String pinCode) {
-        this.mPinCode = pinCode;
-    }
-
     public String getHouseNumber() {
         return mHouseNumber;
     }
@@ -78,20 +102,60 @@ public class YourOrders {
         this.mLocality = locality;
     }
 
-    public String getCity() {
-        return mCity;
+    public String getLandmark() {
+        return mLandmark;
     }
 
-    public void setCity(String city) {
-        this.mCity = city;
+    public void setLandmark(String landmark) {
+        this.mLandmark = landmark;
     }
 
-    public String getState() {
-        return mState;
+    public String getShirts() {
+        return mShirts;
     }
 
-    public void setState(String state) {
-        this.mState = state;
+    public void setShirts(String shirts) {
+        this.mShirts = shirts;
+    }
+
+    public String getTrousers() {
+        return mTrousers;
+    }
+
+    public void setTrousers(String trousers) {
+        this.mTrousers = trousers;
+    }
+
+    public String getOthers() {
+        return mOthers;
+    }
+
+    public void setOthers(String others) {
+        this.mOthers = others;
+    }
+
+    public String getCans() {
+        return mCans;
+    }
+
+    public void setCans(String cans) {
+        this.mCans = cans;
+    }
+
+    public String getOrderDate() {
+        return mOrderDate;
+    }
+
+    public void setOrderDate(String orderDate) {
+        this.mOrderDate = orderDate;
+    }
+
+    public String getOrderTime() {
+        return mOrderTime;
+    }
+
+    public void setOrderTime(String orderTime) {
+        this.mOrderTime = orderTime;
     }
 
     @Exclude
@@ -107,10 +171,8 @@ public class YourOrders {
         this.mServiceType = updatedOrder.mServiceType;
         this.mFullName = updatedOrder.mFullName;
         this.mMobileNumber = updatedOrder.mMobileNumber;
-        this.mPinCode = updatedOrder.mPinCode;
         this.mHouseNumber = updatedOrder.mHouseNumber;
         this.mLocality = updatedOrder.mLocality;
-        this.mCity = updatedOrder.mCity;
-        this.mState = updatedOrder.mState;
+        this.mLandmark = updatedOrder.mLandmark;
     }
 }

@@ -7,11 +7,9 @@ public class SavedAddresses {
 
     private String mFullName;
     private String mMobileNumber;
-    private String mPinCode;
     private String mHouseNumber;
     private String mLocality;
-    private String mCity;
-    private String mState;
+    private String mLandmark;
 
     private String mKey;
 
@@ -19,14 +17,12 @@ public class SavedAddresses {
         //Required For Data Serializations.
     }
 
-    public SavedAddresses(String fullName, String mobileNumber, String pinCode, String houseNumber, String locality, String city, String state) {
+    public SavedAddresses(String fullName, String mobileNumber, String houseNumber, String locality, String landmark) {
         mFullName = fullName;
         mMobileNumber = mobileNumber;
-        mPinCode = pinCode;
         mHouseNumber = houseNumber;
         mLocality = locality;
-        mCity = city;
-        mState = state;
+        mLandmark = landmark;
     }
 
     public String getFullName() {
@@ -45,14 +41,6 @@ public class SavedAddresses {
         this.mMobileNumber = mobileNumber;
     }
 
-    public String getPinCode() {
-        return mPinCode;
-    }
-
-    public void setPinCode(String pinCode) {
-        this.mPinCode = pinCode;
-    }
-
     public String getHouseNumber() {
         return mHouseNumber;
     }
@@ -69,20 +57,12 @@ public class SavedAddresses {
         this.mLocality = locality;
     }
 
-    public String getCity() {
-        return mCity;
+    public String getLandmark() {
+        return mLandmark;
     }
 
-    public void setCity(String city) {
-        this.mCity = city;
-    }
-
-    public String getState() {
-        return mState;
-    }
-
-    public void setState(String state) {
-        this.mState = state;
+    public void setLandmark(String landmark) {
+        this.mLandmark = landmark;
     }
 
     @Exclude
@@ -97,10 +77,8 @@ public class SavedAddresses {
     public void setValues(SavedAddresses updatedAddress) {
         this.mFullName = updatedAddress.mFullName;
         this.mMobileNumber = updatedAddress.mMobileNumber;
-        this.mPinCode = updatedAddress.mPinCode;
         this.mHouseNumber = updatedAddress.mHouseNumber;
         this.mLocality = updatedAddress.mLocality;
-        this.mCity = updatedAddress.mCity;
-        this.mState = updatedAddress.mState;
+        this.mLandmark = updatedAddress.mLandmark;
     }
 }

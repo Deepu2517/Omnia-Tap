@@ -49,8 +49,19 @@ public class SavedAddressesActivity extends AppCompatActivity implements SavedAd
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         addressList.setLayoutManager(manager);
-        mAdapter = new SavedAddressAdapter(this);
+        mAdapter = new SavedAddressAdapter(this, this);
         addressList.setAdapter(mAdapter);
+
+        int position = manager.findLastVisibleItemPosition();
+        if (position < 0) {
+            Log.d(Constants.TAG, "It returned " + position);
+        } else if (position > 0) {
+            Log.d(Constants.TAG, "It returned " + position);
+        } else if (position == 0) {
+            Log.d(Constants.TAG, "Why it returned Zero?");
+        } else {
+            Log.d(Constants.TAG, "what did it return " + position);
+        }
     }
 
     private void showAddEditDeleteDialog(final SavedAddresses addresses) {
@@ -61,20 +72,15 @@ public class SavedAddressesActivity extends AppCompatActivity implements SavedAd
 
         final EditText fullNameEditText = (EditText) view.findViewById(R.id.full_name_input);
         final EditText mobileNumberTextView = (EditText) view.findViewById(R.id.mobile_number_input);
-        final EditText pinCodeTextView = (EditText) view.findViewById(R.id.pincode_input);
         final EditText houseNumberTextView = (EditText) view.findViewById(R.id.house_no_input);
         final EditText localityTextView = (EditText) view.findViewById(R.id.locality_input);
-        final EditText cityTextView = (EditText) view.findViewById(R.id.city_input);
-        final EditText stateTextView = (EditText) view.findViewById(R.id.state_input);
-
+        final EditText landmarkEditText = (EditText) view.findViewById(R.id.landmark_input);
         if (addresses != null) {
             fullNameEditText.setText(addresses.getFullName());
             mobileNumberTextView.setText(addresses.getMobileNumber());
-            pinCodeTextView.setText(addresses.getPinCode());
             houseNumberTextView.setText(addresses.getHouseNumber());
             localityTextView.setText(addresses.getLocality());
-            cityTextView.setText(addresses.getCity());
-            stateTextView.setText(addresses.getState());
+            landmarkEditText.setText(addresses.getLandmark());
 
             builder.setNegativeButton(android.R.string.cancel, null);
             builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
@@ -82,12 +88,10 @@ public class SavedAddressesActivity extends AppCompatActivity implements SavedAd
                 public void onClick(DialogInterface dialog, int which) {
                     String fullName = fullNameEditText.getText().toString();
                     String mobileNumber = mobileNumberTextView.getText().toString();
-                    String pinCode = pinCodeTextView.getText().toString();
                     String houseNumber = houseNumberTextView.getText().toString();
                     String locality = localityTextView.getText().toString();
-                    String city = cityTextView.getText().toString();
-                    String state = stateTextView.getText().toString();
-                    mAdapter.firebaseUpdate(addresses, fullName, mobileNumber, pinCode, houseNumber, locality, city, state);
+                    String landmark = landmarkEditText.getText().toString();
+                    mAdapter.firebaseUpdate(addresses, fullName, mobileNumber, houseNumber, locality, landmark);
                 }
             });
             builder.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
@@ -103,13 +107,11 @@ public class SavedAddressesActivity extends AppCompatActivity implements SavedAd
                 public void onClick(DialogInterface dialog, int which) {
                     String fullName = fullNameEditText.getText().toString();
                     String mobileNumber = mobileNumberTextView.getText().toString();
-                    String pinCode = pinCodeTextView.getText().toString();
                     String houseNumber = houseNumberTextView.getText().toString();
                     String locality = localityTextView.getText().toString();
-                    String city = cityTextView.getText().toString();
-                    String state = stateTextView.getText().toString();
+                    String landmark = landmarkEditText.getText().toString();
 
-                    SavedAddresses addresses = new SavedAddresses(fullName, mobileNumber, pinCode, houseNumber, locality, city, state);
+                    SavedAddresses addresses = new SavedAddresses(fullName, mobileNumber, houseNumber, locality, landmark);
                     mAdapter.firebaseAdd(addresses);
                 }
             });
@@ -129,6 +131,7 @@ public class SavedAddressesActivity extends AppCompatActivity implements SavedAd
             Bundle bundle = getIntent().getExtras();
 
             String service_type = bundle.getString(Constants.SERVICE_TYPE);
+            Log.d(Constants.TAG, "service type is : " + service_type);
 
             bundle = new Bundle();
             intent = new Intent(SavedAddressesActivity.this, ConfirmDetailsActivity.class);
@@ -137,11 +140,9 @@ public class SavedAddressesActivity extends AppCompatActivity implements SavedAd
 
             bundle.putString(Constants.SELECTED_NAME, addresses.getFullName());
             bundle.putString(Constants.SELECTED_MOBILE_NUMBER, addresses.getMobileNumber());
-            bundle.putString(Constants.SELECTED_PIN_CODE, addresses.getPinCode());
             bundle.putString(Constants.SELECTED_HOUSE_NUMBER, addresses.getHouseNumber());
             bundle.putString(Constants.SELECTED_LOCALITY, addresses.getLocality());
-            bundle.putString(Constants.SELECTED_CITY, addresses.getCity());
-            bundle.putString(Constants.SELECTED_STATE, addresses.getState());
+            bundle.putString(Constants.SELECTED_LANDMARK, addresses.getLandmark());
             intent.putExtras(bundle);
             startActivity(intent);
         }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical"
+    tools:context="in.desireplace.waytogo.activities.SupportActivity">
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="48dp"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Tell Us Your Problem"
+            android:textSize="32sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/email_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:hint="E-mail"/>
+
+        <Button
+            android:id="@+id/select_order_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@color/colorAccent"
+            android:text="Select The Order"
+            android:textColor="#FFF"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Briefly Describe Your Problem : "
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/about_problem_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:inputType="textLongMessage"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/create_ticket_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:text="Create Ticket"
+        android:textColor="#fff"/>
+
+</RelativeLayout>

@@ -1,86 +1,76 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="in.desireplace.waytogo.fragments.HomePageFragment">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/new_offers_images"
-        android:layout_width="match_parent"
-        android:layout_height="128dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:background="#6969"
-        android:text="Image" />
-
-    <GridLayout
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:columnCount="1">
+        android:orientation="vertical"
+        tools:context="in.desireplace.waytogo.fragments.HomePageFragment">
+
+        <ImageView
+            android:id="@+id/new_offers_images"
+            android:layout_width="match_parent"
+            android:layout_height="164dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/welcome"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/request_pick_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Request Pick Up"
-                android:padding="26dp"/>
-
-            <Space
-                android:layout_height="wrap_content"
-                android:layout_width="30dp"/>
-
-            <Button
-                android:id="@+id/store_drop_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Store Drop"
-                android:padding="26dp"
-                android:paddingStart="40dp"
-                tools:ignore="RtlCompat" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                android:layout_marginBottom="5dp"
+                android:background="@color/colorAccent"
+                android:padding="24dp"
+                android:text="Laundry"
+                android:textColor="#fff"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/water_supply_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Water Supply"
-                android:padding="26dp"
-                android:paddingEnd="40dp"
-                tools:ignore="RtlCompat" />
+                android:layout_marginBottom="5dp"
+                android:background="@color/colorAccent"
+                android:padding="24dp"
+                android:text="Water Can"
+                android:textColor="#fff"
+                android:textSize="18sp" />
 
-            <Space
+            <Button
+                android:id="@+id/store_drop_button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="30dp"/>
+                android:layout_marginBottom="5dp"
+                android:background="@color/colorAccent"
+                android:padding="24dp"
+                android:text="Food And Beverages"
+                android:textColor="#fff"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/customer_care_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Support"
-                android:paddingLeft="40dp"
-                android:paddingRight="50dp"
-                android:paddingTop="26dp"
-                android:paddingBottom="26dp"
-                tools:ignore="RtlCompat" />
+                android:layout_marginBottom="5dp"
+                android:background="@color/colorAccent"
+                android:padding="24dp"
+                android:text="Customer Care"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
         </LinearLayout>
 
+    </LinearLayout>
 
-    </GridLayout>
-</LinearLayout>
+</ScrollView>
