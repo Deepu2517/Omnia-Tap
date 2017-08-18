@@ -14,23 +14,23 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:paddingRight="@dimen/activity_horizontal_margin">
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            app:srcCompat="@android:drawable/sym_def_app_icon" />
+            android:id="@+id/profile_pic_image_view"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="16dp"
+            app:srcCompat="@drawable/profile_pic"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/display_name_text_view"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:layout_marginBottom="5dp"
             android:text="Profile Name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="#fff" />
+            android:textColor="#fff"/>
 
         <TextView
             android:id="@+id/user_mobile_number"
@@ -54,7 +54,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000"/>
+                android:background="@color/colorPrimaryDark"/>
 
             <TextView
                 android:id="@+id/your_orders_text_view"
@@ -70,7 +70,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000"/>
+                android:background="@color/colorPrimaryDark"/>
 
             <TextView
                 android:id="@+id/saved_addresses_text_view"
@@ -86,23 +86,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000"/>
-
-            <TextView
-                android:id="@+id/price_list_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:background="@color/colorAccent"
-                android:gravity="center_vertical"
-                android:padding="16dp"
-                android:text="Price List"
-                android:textColor="#fff"
-                android:textSize="18sp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#000"/>
+                android:background="@color/colorPrimaryDark"/>
 
             <TextView
                 android:id="@+id/notifications_text_view"
@@ -118,23 +102,23 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000"/>
+                android:background="@color/colorPrimaryDark"/>
 
             <TextView
-                android:id="@+id/refer_earn_text_view"
+                android:id="@+id/customer_care_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:background="@color/colorAccent"
                 android:gravity="center_vertical"
                 android:padding="16dp"
-                android:text="Refer And Earn"
+                android:text="Customer Care"
                 android:textColor="#fff"
                 android:textSize="18sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000"/>
+                android:background="@color/colorPrimaryDark"/>
 
             <TextView
                 android:id="@+id/rate_us_text_view"
@@ -150,7 +134,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000"/>
+                android:background="@color/colorPrimaryDark"/>
 
             <TextView
                 android:id="@+id/log_out_text_view"

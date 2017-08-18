@@ -17,6 +17,8 @@ public class WaterSupplyActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water_supply);
 
+        setTitle("Water Can");
+
         Button oneCanOrderButton = (Button) findViewById(R.id.water_order_once_button);
         Button oneMonthSubscriptionButton = (Button) findViewById(R.id.one_month_subscription_button);
         Button threeMonthsSubscriptionButton = (Button) findViewById(R.id.three_months_subscription_button);
@@ -33,7 +35,7 @@ public class WaterSupplyActivity extends AppCompatActivity implements View.OnCli
             case R.id.water_order_once_button :
                 Intent waterIntent = new Intent(getApplicationContext(), SavedAddressesActivity.class);
                 Bundle waterBundle = new Bundle();
-                waterBundle.putString(Constants.SERVICE_TYPE, "water can delivery");
+                waterBundle.putString(Constants.SERVICE_TYPE, "Water Can Delivery");
                 waterIntent.putExtras(waterBundle);
                 startActivity(waterIntent);
                 break;

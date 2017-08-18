@@ -40,6 +40,8 @@ public class SupportActivity extends AppCompatActivity implements YourOrdersAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_support);
 
+        setTitle("Support");
+
         mAuth = FirebaseAuth.getInstance();
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("SupportTicket");
@@ -81,7 +83,7 @@ public class SupportActivity extends AppCompatActivity implements YourOrdersAdap
         RecyclerView rvTest = (RecyclerView) mDialog.findViewById(R.id.rvTest);
         rvTest.setHasFixedSize(true);
         rvTest.setLayoutManager(new LinearLayoutManager(SupportActivity.this));
-        YourOrdersAdapter rvAdapter = new YourOrdersAdapter(this);
+        YourOrdersAdapter rvAdapter = new YourOrdersAdapter(this, this);
         rvTest.setAdapter(rvAdapter);
     }
 

@@ -4,7 +4,6 @@ package in.desireplace.waytogo.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.Button;
 
 import in.desireplace.waytogo.Constants;
 import in.desireplace.waytogo.R;
+import in.desireplace.waytogo.activities.FoodBeveragesActivity;
 import in.desireplace.waytogo.activities.SavedAddressesActivity;
 import in.desireplace.waytogo.activities.SupportActivity;
 import in.desireplace.waytogo.activities.WaterSupplyActivity;
@@ -37,8 +37,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener {
         View rootView = inflater.inflate(R.layout.fragment_home_page, container, false);
         Button requestPickUpButton = (Button) rootView.findViewById(R.id.request_pick_button);
         Button waterSupplyButton = (Button) rootView.findViewById(R.id.water_supply_button);
-        Button laundryStoreDropButton = (Button) rootView.findViewById(R.id.store_drop_button);
-        Button customerCareButton = (Button) rootView.findViewById(R.id.customer_care_button);
+        Button laundryStoreDropButton = (Button) rootView.findViewById(R.id.food_beverages_button);
+        Button customerCareButton = (Button) rootView.findViewById(R.id.support_button);
         requestPickUpButton.setOnClickListener(this);
         waterSupplyButton.setOnClickListener(this);
         laundryStoreDropButton.setOnClickListener(this);
@@ -59,12 +59,10 @@ public class HomePageFragment extends Fragment implements View.OnClickListener {
             case R.id.water_supply_button:
                 startActivity(new Intent(getContext(), WaterSupplyActivity.class));
                 break;
-            case R.id.store_drop_button:
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.content, FoodBeveragesFragment.newInstance());
-                transaction.commit();
+            case R.id.food_beverages_button:
+                startActivity(new Intent(getContext(), FoodBeveragesActivity.class));
                 break;
-            case R.id.customer_care_button:
+            case R.id.support_button:
                 startActivity(new Intent(getContext(), SupportActivity.class));
                 break;
         }

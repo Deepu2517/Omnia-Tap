@@ -1,5 +1,10 @@
 package in.desireplace.waytogo.adapters;
 
+import android.annotation.TargetApi;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.Build;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import in.desireplace.waytogo.Constants;
 import in.desireplace.waytogo.R;
@@ -31,11 +37,31 @@ public class YourOrdersAdapter extends RecyclerView.Adapter<YourOrdersAdapter.Vi
 
     private Callback mCallback;
 
-    public YourOrdersAdapter(Callback callback) {
+    private Context mContext;
+
+    private ProgressDialog dialog;
+
+    public YourOrdersAdapter(Callback callback, Context context) {
         mAuth = FirebaseAuth.getInstance();
         String firebasePath = "users/" + mAuth.getCurrentUser().getUid();
         mOrders = new ArrayList<>();
         mCallback = callback;
+        mContext = context;
+        Log.d(Constants.TAG, context.getClass().getSimpleName());
+        dialog = new ProgressDialog(context);
+        dialog.setIndeterminate(true);
+        dialog.setMessage("please wait...");
+        dialog.setCancelable(false);
+        if (getItemCount() == 0) {
+            dialog.show();
+        }
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                dialog.dismiss();
+            }
+        }, 12000);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(firebasePath + "/YourOrders");
         mDatabaseReference.addChildEventListener(new YourOrdersChildEventListener());
     }
@@ -46,6 +72,7 @@ public class YourOrdersAdapter extends RecyclerView.Adapter<YourOrdersAdapter.Vi
         return new ViewHolder(view);
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final YourOrders orders = mOrders.get(position);
@@ -60,19 +87,31 @@ public class YourOrdersAdapter extends RecyclerView.Adapter<YourOrdersAdapter.Vi
             String shirts = orders.getShirts();
             String trousers = orders.getTrousers();
             String others = orders.getOthers();
-            int Shirts = Integer.parseInt(shirts);
-            int Trousers = Integer.parseInt(trousers);
-            int Others = Integer.parseInt(others);
-            int totalGarments = Shirts + Trousers + Others;
-            String TotalGarments = String.valueOf(totalGarments);
-            holder.mTotalGarmentsTextView.setText("Total Garments : " + TotalGarments);
-        } else if (service_type.equals("water can delivery")) {
+            try{
+                int Shirts = Integer.parseInt(shirts);
+                int Trousers = Integer.parseInt(trousers);
+                int Others = Integer.parseInt(others);
+                int totalGarments = Shirts + Trousers + Others;
+                String TotalGarments = String.valueOf(totalGarments);
+                holder.mTotalGarmentsTextView.setText("Total Garments : " + TotalGarments);
+            }catch(NumberFormatException ex){
+                Log.e(Constants.TAG, "Error is : " + ex.getMessage());
+            }
+        } else if (service_type.equals("Water Can Delivery")) {
             String cans = orders.getCans();
             int can = Integer.parseInt(cans);
             String totalCans = String.valueOf(can);
             holder.mTotalGarmentsTextView.setText("Total Cans : " + totalCans);
         } else {
             Log.e(Constants.TAG, "Invalid service_type : " + service_type);
+        }
+        if (!Objects.equals(mContext.getClass().getSimpleName(), "YourOrdersActivity")) {
+            holder.mContainerView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mCallback.onItemClick(orders);
+                }
+            });
         }
     }
 
@@ -92,6 +131,7 @@ public class YourOrdersAdapter extends RecyclerView.Adapter<YourOrdersAdapter.Vi
             orders.setKey(dataSnapshot.getKey());
             mOrders.add(0, orders);
             notifyDataSetChanged();
+            dialog.dismiss();
         }
 
         @Override

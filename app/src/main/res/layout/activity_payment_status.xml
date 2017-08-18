@@ -10,25 +10,113 @@
         android:id="@+id/payment_id_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:text="Payment ID : MOJO7809005A53631621"
-        android:textSize="14sp" />
+        android:layout_alignBaseline="@+id/finish_activity_button"
+        android:layout_alignBottom="@+id/finish_activity_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="38dp"
+        android:textColor="#000"
+        android:textSize="14sp"
+        tools:text="Payment ID : MOJO7809005A53631621" />
 
     <TextView
         android:id="@+id/payment_status_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/payment_id_text_view"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Payment of 370/- for Water Can One Month Subscription is successful"
+        android:layout_marginBottom="16dp"
+        android:text="Payment of"
         android:textSize="18sp"
         android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/finish_activity_button"
+    <ImageView
+        android:id="@+id/status_image_view"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_below="@+id/payment_status_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        tools:src="@drawable/cross"/>
+
+    <TextView
+        android:id="@+id/status_price_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Close"/>
+        android:layout_below="@+id/status_image_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:textColor="#000"
+        android:textSize="28sp"
+        tools:text="$ 370"/>
+
+    <TextView
+        android:id="@+id/for_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/status_price_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="For"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/service_type_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/for_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="20sp"
+        tools:text="One Month Water Can Subscription"/>
+
+    <TextView
+        android:id="@+id/status_text_type_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/service_type_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:textAlignment="center"
+        android:textColor="#B22222"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="Has Failed."/>
+
+    <TextView
+        android:id="@+id/message_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/status_text_type_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="20sp"
+        tools:text="Error Message Appears Here"/>
+
+    <TextView
+        android:id="@+id/error_message_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/message_text_view"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="#B22222"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="Please Take A Screen Shot Of This And, Contact Our Customer Care"/>
+
+    <Button
+        android:id="@+id/finish_activity_button"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/close" />
 
 </RelativeLayout>

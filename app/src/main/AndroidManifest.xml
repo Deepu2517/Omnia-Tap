@@ -8,13 +8,14 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name="com.instamojo.android.InstamojoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
@@ -22,12 +23,8 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".activities.HomeActivity"
@@ -37,7 +34,9 @@
             android:label="@string/title_activity_saved_addresses"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.ConfirmDetailsActivity" />
-        <activity android:name=".activities.LoginActivity" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -53,7 +52,18 @@
         <activity android:name=".activities.WaterSupplyActivity" />
         <activity android:name=".activities.YourOrdersActivity" />
         <activity android:name=".activities.SupportActivity" />
-        <activity android:name=".activities.PaymentStatusActivity"></activity>
+        <activity
+            android:name=".activities.PaymentStatusActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.FoodBeveragesActivity" />
+        <activity android:name=".activities.SplashScreen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.instamojo.android.Instamojo;
 
 import in.desireplace.waytogo.Constants;
-import in.desireplace.waytogo.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         initializeListeners();
         Instamojo.initialize(this);

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -47,25 +48,17 @@ import okhttp3.Response;
 
 public class ConfirmDetailsActivity extends AppCompatActivity {
 
+    String mServiceType;
     private TextView mName_TextView, mHouse_no_TextView, mLaundry_TextView, mPhoneNumber_TextView, mService_Type_Laundry_TextView, mService_Type_Water_TextView, mService_Type_Subscription_TextView, mPrice_TextView, mDelivery_Charges_TextView, mTotal_Amount_TextView;
-
     private EditText mShirts_Laundry_EditText, mTrousers_Laundry_EditText, mOthers_Laundry_EditText, mCans_Water_EditText;
-
     private Button mPlace_Order_Laundry_Button, mPlace_Order_Water_Button, mProceed_To_Payment_Button;
-
     private LinearLayout mLaundry_LinearLayout, mWater_LinearLayout, mSubscription_LinearLayout;
-
-    private DatabaseReference mDatabaseReference;
-
-    private DatabaseReference mReference;
-
+    private DatabaseReference mDatabaseReference, mReference, mRef;
     private FirebaseAuth mAuth;
-
     private ProgressDialog dialog;
-
     private String accessToken = null;
-
     private String amount = null;
+    private String mRequest;
 
     private static Integer randomInt(Integer low, Integer high) {
         return (int) (Math.floor(Math.random() * (high - low + 1)) + low);
@@ -89,6 +82,8 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_details);
 
+        setTitle("Confirm Details");
+
         dialog = new ProgressDialog(this);
         dialog.setIndeterminate(true);
         dialog.setMessage("please wait...");
@@ -105,6 +100,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(firebasePath + "/YourOrders");
         mReference = FirebaseDatabase.getInstance().getReference().child("Orders");
+        mRef = FirebaseDatabase.getInstance().getReference().child(firebasePath + "/StatusUrl");
 
         mLaundry_LinearLayout = (LinearLayout) findViewById(R.id.laundry_linear_layout);
         mWater_LinearLayout = (LinearLayout) findViewById(R.id.water_linear_layout);
@@ -136,25 +132,24 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        final String service_type = bundle.getString(Constants.SERVICE_TYPE);
+        mServiceType = bundle.getString(Constants.SERVICE_TYPE);
         final String selectedName = bundle.getString(Constants.SELECTED_NAME);
         final String selectedMobileNumber = bundle.getString(Constants.SELECTED_MOBILE_NUMBER);
         final String selectedHouseNumber = bundle.getString(Constants.SELECTED_HOUSE_NUMBER);
         final String selectedLocality = bundle.getString(Constants.SELECTED_LOCALITY);
         final String selectedLandmark = bundle.getString(Constants.SELECTED_LANDMARK);
 
-        assert service_type != null;
-        switch (service_type) {
-            case "water can delivery":
+        switch (mServiceType) {
+            case "Water Can Delivery":
                 mSubscription_LinearLayout.setVisibility(View.GONE);
                 mLaundry_LinearLayout.setVisibility(View.GONE);
                 mWater_LinearLayout.setVisibility(View.VISIBLE);
 
                 mName_TextView.setText(selectedName);
-                mHouse_no_TextView.setText(selectedHouseNumber + "" + selectedLocality);
+                mHouse_no_TextView.setText(selectedHouseNumber + " " + selectedLocality);
                 mLaundry_TextView.setText(selectedLandmark);
                 mPhoneNumber_TextView.setText(selectedMobileNumber);
-                mService_Type_Water_TextView.setText(service_type);
+                mService_Type_Water_TextView.setText(mServiceType);
 
                 mPlace_Order_Water_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -167,7 +162,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                                 String currentDate = calendar.get(Calendar.DATE) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR);
                                 String currentTime = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND);
                                 Log.d(Constants.TAG, currentDate + " " + currentTime);
-                                final YourOrders orders = new YourOrders(orderIdGenerator(), service_type, selectedName, selectedMobileNumber, selectedHouseNumber, selectedLocality, selectedLandmark, mCans_Water_EditText.getText().toString(), currentDate, currentTime);
+                                final YourOrders orders = new YourOrders(orderIdGenerator(), mServiceType, selectedName, selectedMobileNumber, selectedHouseNumber, selectedLocality, selectedLandmark, mCans_Water_EditText.getText().toString(), currentDate, currentTime);
                                 mDatabaseReference.push().setValue(orders, new DatabaseReference.CompletionListener() {
                                     @Override
                                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -192,7 +187,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                 mHouse_no_TextView.setText(selectedHouseNumber + " " + selectedLocality);
                 mLaundry_TextView.setText(selectedLandmark);
                 mPhoneNumber_TextView.setText(selectedMobileNumber);
-                mService_Type_Laundry_TextView.setText(service_type);
+                mService_Type_Laundry_TextView.setText(mServiceType);
 
                 mPlace_Order_Laundry_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -205,7 +200,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                                 String currentDate = calendar.get(Calendar.DATE) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR);
                                 String currentTime = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND);
                                 Log.d(Constants.TAG, currentDate + " " + currentTime);
-                                final YourOrders orders = new YourOrders(orderIdGenerator(), service_type, selectedName, selectedMobileNumber, selectedHouseNumber, selectedLocality, selectedLandmark, mShirts_Laundry_EditText.getText().toString(), mTrousers_Laundry_EditText.getText().toString(), mOthers_Laundry_EditText.getText().toString(), currentDate, currentTime);
+                                final YourOrders orders = new YourOrders(orderIdGenerator(), mServiceType, selectedName, selectedMobileNumber, selectedHouseNumber, selectedLocality, selectedLandmark, mShirts_Laundry_EditText.getText().toString(), mTrousers_Laundry_EditText.getText().toString(), mOthers_Laundry_EditText.getText().toString(), currentDate, currentTime);
                                 Log.d(Constants.TAG, "Shirts : " + mShirts_Laundry_EditText.getText().toString() + " trousers : " + mTrousers_Laundry_EditText.getText().toString() + " others : " + mOthers_Laundry_EditText.getText().toString());
                                 mDatabaseReference.push().setValue(orders, new DatabaseReference.CompletionListener() {
                                     @Override
@@ -237,19 +232,19 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                 mHouse_no_TextView.setText(selectedHouseNumber + " " + selectedLocality);
                 mLaundry_TextView.setText(selectedLandmark);
                 mPhoneNumber_TextView.setText(selectedMobileNumber);
-                mService_Type_Subscription_TextView.setText(service_type);
+                mService_Type_Subscription_TextView.setText(mServiceType);
 
-                if (Objects.equals(service_type, "Three Months Subscription")) {
+                if (Objects.equals(mServiceType, "Three Months Subscription")) {
                     mPrice_TextView.setText("1050/-");
                     mDelivery_Charges_TextView.setText("Free");
                     mTotal_Amount_TextView.setText("1050/-");
                     amount = "1050.00";
-                } else if (Objects.equals(service_type, "Six Months Subscription")) {
+                } else if (Objects.equals(mServiceType, "Six Months Subscription")) {
                     mPrice_TextView.setText("2100/-");
                     mDelivery_Charges_TextView.setText("Free");
                     mTotal_Amount_TextView.setText("2100/-");
                     amount = "2100.00";
-                } else if (Objects.equals(service_type, "One Month Subscription")) {
+                } else if (Objects.equals(mServiceType, "One Month Subscription")) {
                     mPrice_TextView.setText("370/-");
                     mDelivery_Charges_TextView.setText("Free");
                     mTotal_Amount_TextView.setText("370/-");
@@ -263,13 +258,13 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                 mProceed_To_Payment_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fetchTokenAndTransactionID(selectedName, selectedMobileNumber, service_type, amount);
+                        fetchTokenAndTransactionID(selectedName, selectedMobileNumber, mServiceType, amount);
                     }
                 });
                 Instamojo.setLogLevel(Log.DEBUG);
                 break;
             default:
-                Log.e(Constants.TAG, "Unknown Behaviour:Service Type Received: " + service_type);
+                Log.e(Constants.TAG, "Unknown Behaviour:Service Type Received: " + mServiceType);
                 break;
         }
     }
@@ -496,7 +491,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
 
             // Check transactionID, orderID, and orderID for null before using them to check the Payment status.
             if (transactionID != null || paymentID != null) {
-                checkPaymentStatus(transactionID, orderID);
+                checkPaymentStatus(transactionID, orderID, mServiceType);
             } else {
                 showToast("Oops!! Payment was cancelled");
             }
@@ -508,7 +503,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
      *
      * @param transactionID Unique identifier of a transaction ID
      */
-    private void checkPaymentStatus(final String transactionID, final String orderID) {
+    private void checkPaymentStatus(final String transactionID, final String orderID, final String serviceType) {
         if (accessToken == null || (transactionID == null && orderID == null)) {
             return;
         }
@@ -530,6 +525,9 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                 .url(url)
                 .build();
         Log.d("some", "request is " + request);
+        mRequest = request.toString();
+        Log.d("some", "request after converted to string is " + mRequest);
+        mRef.push().setValue(mRequest);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -544,6 +542,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                 });
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseString = response.body().string();
@@ -553,16 +552,18 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                 String paymentID = null;
                 String amount = null;
                 String errorMessage = null;
-                String failure;
+                String failure = null;
                 String reason = null;
                 String message = null;
 
                 try {
                     JSONObject responseObject = new JSONObject(responseString);
                     JSONObject payment = responseObject.getJSONArray("payments").getJSONObject(0);
-                    failure = payment.getString("failure");
-                    Log.d("some", "failure is " + failure);
                     status = payment.getString("status");
+                    if (!Objects.equals(status, "successful")) {
+                        failure = payment.getString("failure");
+                    }
+                    Log.d("some", "failure is " + failure);
                     paymentID = payment.getString("id");
                     amount = responseObject.getString("amount");
                     Log.d("some", "status : " + status + "\n" + "paymentID : " + paymentID + "\n" + "amount : " + amount);
@@ -576,12 +577,13 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                     Log.d("some", "error : " + e.toString());
                 }
 
+                final String finalFailure = failure;
                 final String finalStatus = status;
                 final String finalErrorMessage = errorMessage;
                 final String finalPaymentID = paymentID;
                 final String finalAmount = amount;
-                String finalFailureReason = reason;
-                String finalFailureMessage = message;
+                final String finalFailureReason = reason;
+                final String finalFailureMessage = message;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -592,14 +594,18 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                             showToast(finalErrorMessage);
                             return;
                         }
-
-                        if (!finalStatus.equalsIgnoreCase("successful")) {
-                            showToast("Transaction still pending");
-                            return;
-                        }
-
-                        //TODO: Send To Another Activity
-                        showToast("Transaction Successful for id - " + finalPaymentID);
+                        Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentStatusActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("finalStatus", finalStatus);
+                        bundle.putString("finalErrorMessage", finalErrorMessage);
+                        bundle.putString("finalPaymentID", finalPaymentID);
+                        bundle.putString("finalAmount", finalAmount);
+                        bundle.putString("finalFailureReason", finalFailureReason);
+                        bundle.putString("finalFailureMessage", finalFailureMessage);
+                        bundle.putString("finalFailure", finalFailure);
+                        bundle.putString("serviceType", serviceType);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     }
                 });
             }

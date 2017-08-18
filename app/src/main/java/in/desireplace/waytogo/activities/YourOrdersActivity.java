@@ -1,45 +1,37 @@
 package in.desireplace.waytogo.activities;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
+import in.desireplace.waytogo.Constants;
 import in.desireplace.waytogo.R;
 import in.desireplace.waytogo.adapters.YourOrdersAdapter;
+import in.desireplace.waytogo.models.YourOrders;
 
-public class YourOrdersActivity extends AppCompatActivity {
+public class YourOrdersActivity extends AppCompatActivity implements YourOrdersAdapter.Callback{
 
     private YourOrdersAdapter mAdapter;
-
-    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_orders);
 
+        setTitle("Your Orders");
+
         RecyclerView ordersList = (RecyclerView) findViewById(R.id.orders_list);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         ordersList.setLayoutManager(manager);
-        mAdapter = new YourOrdersAdapter(null);
+        mAdapter = new YourOrdersAdapter(null, this);
         ordersList.setAdapter(mAdapter);
+    }
 
-        dialog = new ProgressDialog(this);
-        dialog.setIndeterminate(true);
-        dialog.setMessage("please wait...");
-        dialog.setCancelable(false);
-        dialog.show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                dialog.dismiss();
-            }
-        }, 3000);
+    @Override
+    public void onItemClick(YourOrders orders) {
+        Log.wtf(Constants.TAG, "Users Are Stupid!!!");
     }
 }

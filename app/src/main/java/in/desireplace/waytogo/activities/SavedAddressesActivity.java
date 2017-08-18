@@ -31,6 +31,8 @@ public class SavedAddressesActivity extends AppCompatActivity implements SavedAd
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setTitle("Add/Edit Address");
+
         identifier = getIntent().getStringExtra("identifier");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -40,10 +42,6 @@ public class SavedAddressesActivity extends AppCompatActivity implements SavedAd
                 showAddEditDeleteDialog(null);
             }
         });
-
-        if (identifier == null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
         RecyclerView addressList = (RecyclerView) findViewById(R.id.address_list);
         LinearLayoutManager manager = new LinearLayoutManager(this);
