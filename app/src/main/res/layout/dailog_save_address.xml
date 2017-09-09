@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="4dp"
-        android:hint="Full Name"
+        android:hint="@string/full_name_edit_text"
         android:textColor="#000000"
         android:textSize="18sp" />
 
@@ -24,8 +24,20 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="4dp"
-        android:hint="Mobile Number"
+        android:hint="@string/mobile_number_edit_text"
         android:inputType="number"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/email_input"
+        style="@style/DialogEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="4dp"
+        android:hint="@string/e_mail_address_edit_text"
+        android:inputType="textEmailAddress"
         android:textColor="#000000"
         android:textSize="18sp" />
 
@@ -36,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="4dp"
-        android:hint="Flat / House No. / Building"
+        android:hint="@string/flat_house_no_building_edit_text"
         android:textColor="#000000"
         android:textSize="18sp"/>
 
@@ -47,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="4dp"
-        android:hint="Colony / Locality"
+        android:hint="@string/colony_locality_edit_text"
         android:textColor="#000000"
         android:textSize="18sp"/>
 
@@ -58,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="4dp"
-        android:hint="Nearest Landmark"
+        android:hint="@string/nearest_landmark_edit_text"
         android:textColor="#000000"
         android:textSize="18sp"/>
 

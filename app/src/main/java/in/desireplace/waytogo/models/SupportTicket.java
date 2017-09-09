@@ -15,7 +15,6 @@ public class SupportTicket {
     private String mOrderDate;
     private String mOrderTime;
 
-
     public SupportTicket() {
         //Required For Data Serializations.
     }

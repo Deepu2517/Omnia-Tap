@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:gravity="center"
-            android:text="Order ID : "
+            android:text="@string/order_id_text"
             android:textColor="#336699"
             android:textSize="14sp"/>
 
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
-            android:text="Order Date : "
+            android:text="@string/order_date_text"
             android:textSize="18sp"/>
 
         <View
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="Address : "
+            android:text="@string/address_text"
             android:textSize="18sp"/>
 
         <View
@@ -63,7 +63,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="Mobile Number : "
+            android:text="@string/mobile_number_text"
+            android:textSize="18sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="5dp"
+            android:background="#696969"/>
+
+        <TextView
+            android:id="@+id/email_orders_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/e_mail_orders_text"
             android:textSize="18sp"/>
 
         <View
@@ -77,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="Service Type : "
+            android:text="@string/service_type_text"
             android:textSize="18sp"/>
 
         <View
@@ -91,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="Total Garments : "
+            android:text="@string/total_garments_text"
             android:textSize="18sp"/>
 
     </LinearLayout>

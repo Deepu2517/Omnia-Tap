@@ -26,8 +26,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener {
     }
 
     public static HomePageFragment newInstance() {
-        HomePageFragment fragment = new HomePageFragment();
-        return fragment;
+        return new HomePageFragment();
     }
 
     @Override
@@ -35,10 +34,10 @@ public class HomePageFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_home_page, container, false);
-        Button requestPickUpButton = (Button) rootView.findViewById(R.id.request_pick_button);
-        Button waterSupplyButton = (Button) rootView.findViewById(R.id.water_supply_button);
-        Button laundryStoreDropButton = (Button) rootView.findViewById(R.id.food_beverages_button);
-        Button customerCareButton = (Button) rootView.findViewById(R.id.support_button);
+        Button requestPickUpButton = rootView.findViewById(R.id.request_pick_button);
+        Button waterSupplyButton = rootView.findViewById(R.id.water_supply_button);
+        Button laundryStoreDropButton = rootView.findViewById(R.id.food_beverages_button);
+        Button customerCareButton = rootView.findViewById(R.id.support_button);
         requestPickUpButton.setOnClickListener(this);
         waterSupplyButton.setOnClickListener(this);
         laundryStoreDropButton.setOnClickListener(this);

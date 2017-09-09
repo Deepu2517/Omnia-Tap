@@ -32,6 +32,6 @@ public class YourOrdersActivity extends AppCompatActivity implements YourOrdersA
 
     @Override
     public void onItemClick(YourOrders orders) {
-        Log.wtf(Constants.TAG, "Users Are Stupid!!!");
+        Log.wtf(Constants.TAG, "Google Is Awesome!!!");
     }
 }

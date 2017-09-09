@@ -11,12 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            tools:ignore="NestedWeights">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -32,9 +34,8 @@
                     android:layout_centerVertical="true"
                     android:background="@color/colorAccent"
                     android:padding="32dp"
-                    android:text="Order 1 Water Can"
+                    android:text="@string/order_1_water_can_button_text"
                     android:textColor="#fff" />
-
 
                 </RelativeLayout>
 
@@ -42,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
                 android:layout_gravity="bottom|center_horizontal"
-                android:text="OR"
+                android:text="@string/or_text"
                 android:textSize="16sp"/>
         </FrameLayout>
 
@@ -56,14 +57,15 @@
             android:id="@+id/RestofScreen"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:padding="16dp"
-                android:text="Take Subscription!!"
+                android:text="@string/take_subscription_text"
                 android:textColor="#000"
                 android:textSize="18sp"/>
 
@@ -72,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:text="Order Once and Leave The Delivery To Us"
+                android:text="@string/description_subscription_text"
                 android:textSize="16sp"/>
 
             <LinearLayout
@@ -89,7 +91,7 @@
                     android:layout_marginBottom="10dp"
                     android:background="@color/colorAccent"
                     android:padding="24dp"
-                    android:text="1 month : 10 cans :- 370/-"
+                    android:text="@string/one_month_overview"
                     android:textColor="#fff"/>
 
                 <Button
@@ -100,7 +102,7 @@
                     android:layout_marginBottom="10dp"
                     android:background="@color/colorAccent"
                     android:padding="24dp"
-                    android:text="3 months : 30 cans :- 1050/-"
+                    android:text="@string/three_months_overview"
                     android:textColor="#fff"/>
 
                 <Button
@@ -110,7 +112,7 @@
                     android:layout_gravity="center"
                     android:background="@color/colorAccent"
                     android:padding="24dp"
-                    android:text="6 months : 60 cans :- 2100/-"
+                    android:text="@string/six_months_overview"
                     android:textColor="#fff"/>
 
             </LinearLayout>

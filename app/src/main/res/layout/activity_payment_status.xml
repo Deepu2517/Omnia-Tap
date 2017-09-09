@@ -17,6 +17,7 @@
         android:layout_marginBottom="38dp"
         android:textColor="#000"
         android:textSize="14sp"
+        tools:ignore="RelativeOverlap"
         tools:text="Payment ID : MOJO7809005A53631621" />
 
     <TextView
@@ -26,7 +27,7 @@
         android:layout_below="@+id/payment_id_text_view"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:text="Payment of"
+        android:text="@string/payment_of_text"
         android:textSize="18sp"
         android:textStyle="bold"/>
 
@@ -37,7 +38,8 @@
         android:layout_below="@+id/payment_status_text_view"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        tools:src="@drawable/cross"/>
+        android:contentDescription="@string/sad_emoji_image"
+        tools:src="@drawable/sad_emoji" />
 
     <TextView
         android:id="@+id/status_price_text_view"
@@ -57,7 +59,7 @@
         android:layout_below="@+id/status_price_text_view"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:text="For"
+        android:text="@string/for_text"
         android:textSize="18sp"/>
 
     <TextView

@@ -18,4 +18,15 @@
 
     </android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/no_addresses_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="No addresses found... click on + to add"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:visibility="gone"/>
+
 </RelativeLayout>

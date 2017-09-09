@@ -8,6 +8,7 @@ public class YourOrders {
     private String mServiceType;
     private String mFullName;
     private String mMobileNumber;
+    private String mEmail;
     private String mHouseNumber;
     private String mLocality;
     private String mLandmark;
@@ -26,11 +27,12 @@ public class YourOrders {
         //Required For Data Serializations.
     }
 
-    public YourOrders(String orderNumber, String serviceType, String fullName, String mobileNumber, String houseNumber, String locality, String landmark, String shirts, String trousers, String others, String orderDate, String orderTime) {
+    public YourOrders(String orderNumber, String serviceType, String fullName, String mobileNumber, String email, String houseNumber, String locality, String landmark, String shirts, String trousers, String others, String orderDate, String orderTime) {
         mOrderNumber = orderNumber;
         mServiceType = serviceType;
         mFullName = fullName;
         mMobileNumber = mobileNumber;
+        mEmail = email;
         mHouseNumber = houseNumber;
         mLocality = locality;
         mLandmark = landmark;
@@ -41,11 +43,12 @@ public class YourOrders {
         mOrderTime = orderTime;
     }
 
-    public YourOrders(String orderNumber, String serviceType, String fullName, String mobileNumber, String houseNumber, String locality, String landmark, String cans, String orderDate, String orderTime) {
+    public YourOrders(String orderNumber, String serviceType, String fullName, String mobileNumber, String email, String houseNumber, String locality, String landmark, String cans, String orderDate, String orderTime) {
         mOrderNumber = orderNumber;
         mServiceType = serviceType;
         mFullName = fullName;
         mMobileNumber = mobileNumber;
+        mEmail = email;
         mHouseNumber = houseNumber;
         mLocality = locality;
         mLandmark = landmark;
@@ -84,6 +87,14 @@ public class YourOrders {
 
     public void setMobileNumber(String mobileNumber) {
         this.mMobileNumber = mobileNumber;
+    }
+
+    public String getEmail() {
+        return mEmail;
+    }
+
+    public void setEmail(String email) {
+        this.mEmail = email;
     }
 
     public String getHouseNumber() {

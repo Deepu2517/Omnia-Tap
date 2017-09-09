@@ -13,5 +13,6 @@ public class FoodBeveragesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_food_beverages);
 
         setTitle("Service Coming Soon");
+
     }
 }

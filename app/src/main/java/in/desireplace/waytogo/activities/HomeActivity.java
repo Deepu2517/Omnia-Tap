@@ -1,19 +1,19 @@
 package in.desireplace.waytogo.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import in.desireplace.waytogo.Constants;
 import in.desireplace.waytogo.R;
 import in.desireplace.waytogo.fragments.HomePageFragment;
 import in.desireplace.waytogo.fragments.ProfilePageFragment;
@@ -46,6 +46,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        checkConnection();
+
         setTitle("Omnia Tap");
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -54,6 +56,19 @@ public class HomeActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, HomePageFragment.newInstance());
         transaction.commit();
+    }
+
+    private void checkConnection() {
+        if (!isNetworkAvailable()) {
+            startActivity(new Intent(this, SplashScreen.class));
+        }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @Override
@@ -67,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.notifications:
-                Toast.makeText(this, "Coming Soon!!!!!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, NotificationsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -81,6 +96,5 @@ public class HomeActivity extends AppCompatActivity {
         a.addCategory(Intent.CATEGORY_HOME);
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
-        Log.d(Constants.TAG, "Exiting Home Activity");
     }
 }

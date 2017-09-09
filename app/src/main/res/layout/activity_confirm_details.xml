@@ -12,7 +12,7 @@
         android:background="@color/colorPrimary"
         android:gravity="center_vertical"
         android:padding="16dp"
-        android:text="Address"
+        android:text="@string/address_header_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="#fff" />
 
@@ -21,9 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Deepak"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:textColor="#000"/>
+        android:textColor="#000"
+        tools:text="Deepak"/>
 
     <TextView
         android:id="@+id/house_no_locality_text_view"
@@ -31,9 +31,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:text="C-123 Reva University, kattigenhalli, yelaha..."
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:textColor="#000"/>
+        android:textColor="#000"
+        tools:text="C-123 Reva University, kattigenhalli, yelaha..."/>
 
     <TextView
         android:id="@+id/city_pincode_text_view"
@@ -42,9 +42,20 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="6dp"
-        android:text="BANGALORE - 560064"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-        android:textColor="#000"/>
+        android:textColor="#000"
+        tools:text="BANGALORE - 560064"/>
+
+    <TextView
+        android:id="@+id/email_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+        android:textColor="@color/colorPrimaryDark"
+        tools:text="jarupla.deepak@gmail.com"/>
 
     <TextView
         android:id="@+id/phone_number_text_view"
@@ -53,8 +64,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:text="9393781818"
-        android:textColor="#006699"/>
+        android:textColor="#006699"
+        tools:text="9393781818"/>
 
     <View
         android:layout_width="match_parent"
@@ -84,6 +95,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -95,9 +107,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Service Type"
+                            android:text="@string/service_type_laundry"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                            android:textColor="#808080"/>
+                            android:textColor="#000"/>
 
                         <TextView
                             android:id="@+id/selected_service_type_laundry_text_view"
@@ -105,7 +117,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textColor="#000"
+                            android:textColor="@color/colorPrimaryDark"
                             tools:text="Laundry"/>
 
                     </LinearLayout>
@@ -119,18 +131,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Price"
+                            android:text="@string/price_laundry"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                            android:textColor="#808080"/>
+                            android:textColor="#000"/>
 
                         <TextView
                             android:id="@+id/price_laundry_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
-                            android:text="Per KG 50/-"
+                            android:text="@string/per_kg_60_laundry"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textColor="#000"/>
+                            android:textColor="@color/colorPrimaryDark"/>
 
                     </LinearLayout>
 
@@ -145,13 +157,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:text="BASIC INFORMATION"
+                    android:text="@string/basic_information_laundry"
                     android:textColor="#000"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -159,7 +172,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="70"
-                        android:text="NO OF SHIRTS :"
+                        android:text="@string/no_of_shirts_laundry"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:textColor="#000"/>
 
@@ -170,7 +183,7 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="7dp"
                         android:layout_weight="30"
-                        android:hint="Example : 3"
+                        android:hint="@string/example_3_laundry_hint"
                         android:inputType="number"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="#808080"/>
@@ -181,6 +194,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="7dp"
                     android:orientation="horizontal">
 
@@ -189,7 +203,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="70"
-                        android:text="NO OF TROUSERS :"
+                        android:text="@string/no_of_trousers_laundry"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:textColor="#000"/>
 
@@ -200,7 +214,7 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="7dp"
                         android:layout_weight="30"
-                        android:hint="Example : 2"
+                        android:hint="@string/example_2_laundry_hint"
                         android:inputType="number"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="#808080"/>
@@ -217,8 +231,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:layout_weight="70"
-                        android:text="OTHERS   : "
+                        android:text="@string/others_laundry"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:textColor="#000"/>
 
@@ -229,7 +244,7 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="7dp"
                         android:layout_weight="30"
-                        android:hint="Example : 0"
+                        android:hint="@string/example_0_laundry_hint"
                         android:inputType="number"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="#808080"/>
@@ -243,7 +258,7 @@
                     android:layout_gravity="bottom|center"
                     android:layout_margin="16dp"
                     android:background="@color/colorAccent"
-                    android:text="Place Order"
+                    android:text="@string/place_order_laundry_button"
                     android:textColor="#fff"/>
 
             </LinearLayout>
@@ -262,6 +277,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -273,9 +289,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Service Type"
+                            android:text="@string/service_type_water"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                            android:textColor="#808080"/>
+                            android:textColor="#000"/>
 
                         <TextView
                             android:id="@+id/selected_service_type_water_text_view"
@@ -283,7 +299,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textColor="#000"
+                            android:textColor="@color/colorPrimaryDark"
                             tools:text="Water Can"/>
 
                     </LinearLayout>
@@ -297,18 +313,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Price"
+                            android:text="@string/price_water_text"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                            android:textColor="#808080"/>
+                            android:textColor="#000"/>
 
                         <TextView
                             android:id="@+id/price_water_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
-                            android:text="Per Can 40/-"
+                            android:text="@string/per_can_40_water_text"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textColor="#000"/>
+                            android:textColor="@color/colorPrimaryDark"/>
 
                     </LinearLayout>
 
@@ -323,13 +339,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:text="BASIC INFORMATION"
+                    android:text="@string/basic_information_water_text"
                     android:textColor="#000"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -337,7 +354,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="70"
-                        android:text="Number Of Can/Cans : "
+                        android:text="@string/number_of_can_cans_water"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:textColor="#000"/>
 
@@ -348,7 +365,7 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="7dp"
                         android:layout_weight="30"
-                        android:hint="Example : 3"
+                        android:hint="@string/example_3_water_hint"
                         android:inputType="number"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="#808080"/>
@@ -362,7 +379,7 @@
                     android:layout_gravity="bottom|center"
                     android:layout_margin="16dp"
                     android:background="@color/colorAccent"
-                    android:text="Place Order"
+                    android:text="@string/place_orderwater_button"
                     android:textColor="#fff"/>
 
             </LinearLayout>
@@ -386,8 +403,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Service Type"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:text="@string/service_type_subscription"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="#000"/>
 
                     <TextView
@@ -395,9 +412,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="#808080"
-                        tools:text="Laundry"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorPrimaryDark"
+                        tools:text="One Month Subscription"/>
 
                 </LinearLayout>
 
@@ -410,20 +427,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:text="PRICE DETAILS"
+                    android:text="@string/price_details_subscription"
                     android:textColor="#000"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="70"
-                        android:text="Price"
+                        android:text="@string/price_subscription_text"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:textColor="#000"/>
 
@@ -434,9 +452,9 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="7dp"
                         android:layout_weight="30"
-                        android:text="1,110"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="#808080"/>
+                        android:textColor="#808080"
+                        tools:text="1,110"/>
 
                 </LinearLayout>
 
@@ -444,6 +462,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="7dp"
                     android:orientation="horizontal">
 
@@ -451,7 +470,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="70"
-                        android:text="Delivery"
+                        android:text="@string/delivery_subscription_text"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:textColor="#000"/>
 
@@ -462,7 +481,7 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="7dp"
                         android:layout_weight="30"
-                        android:text="Free"
+                        android:text="@string/free_delivery_charges"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="#808080"/>
 
@@ -478,7 +497,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="80"
-                        android:text="Amount Payable :"
+                        android:text="@string/amount_payable_subscription"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:textColor="#000"/>
 
@@ -489,9 +508,9 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="7dp"
                         android:layout_weight="30"
-                        android:text="1,110"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="#808080"/>
+                        android:textColor="#808080"
+                        tools:text="1,110"/>
 
                 </LinearLayout>
 
@@ -502,7 +521,7 @@
                     android:layout_gravity="bottom|center"
                     android:layout_margin="16dp"
                     android:background="@color/colorAccent"
-                    android:text="Proceed To Payment"
+                    android:text="@string/proceed_to_payment_subscription_button"
                     android:textColor="#fff"/>
 
             </LinearLayout>

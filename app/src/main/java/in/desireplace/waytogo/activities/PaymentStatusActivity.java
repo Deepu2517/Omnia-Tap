@@ -1,17 +1,19 @@
 package in.desireplace.waytogo.activities;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -20,58 +22,39 @@ import java.util.Objects;
 
 import in.desireplace.waytogo.Constants;
 import in.desireplace.waytogo.R;
-import in.desireplace.waytogo.models.Subscriptions;
 
 public class PaymentStatusActivity extends AppCompatActivity {
 
-    private TextView mPaymentIdTextView;
-    private Button mFinishButton;
-    private ImageView mStatusImageView;
-    private TextView mPriceTextView;
-    private TextView mServiceTypeTextView;
-    private TextView mStatusTypeTextView;
-    private TextView mMessageTextView;
-    private TextView mErrorMessageTextView;
-
-    private DatabaseReference mDatabaseReference;
-    private FirebaseAuth mAuth;
-
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_status);
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         String firebasePath = "users/" + mAuth.getCurrentUser().getUid();
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(firebasePath + "/Subscriptions");
+        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(firebasePath + "/");
 
         Bundle bundle = getIntent().getExtras();
         String finalStatus = bundle.getString("finalStatus");
-        String finalErrorMessage = bundle.getString("finalErrorMessage");
         String finalPaymentID = bundle.getString("finalPaymentID");
         String finalAmount = bundle.getString("finalAmount");
-        String finalFailureReason = bundle.getString("finalFailureReason");
         String finalFailureMessage = bundle.getString("finalFailureMessage");
-        String finalFailure = bundle.getString("finalFailure");
         String serviceType = bundle.getString("serviceType");
 
-        //TODO: Remove These 4 lines.
-//        String finalStatus = "successful";
-//        String finalPaymentID = " MOJO7809005A53631621";
-//        String finalAmount = "10";
-//        String serviceType = "One Month Subscription";
+        Crashlytics.log(9, "PaymentStatusDetails", " FinalStatus : " + finalStatus + " FinalPaymentID : " + finalPaymentID +
+                " FinalAmount : " + finalAmount + " FinalFailureMessage : " + finalFailureMessage + " ServiceType : " + serviceType);
 
-        mPaymentIdTextView = (TextView) findViewById(R.id.payment_id_text_view);
-        mFinishButton = (Button) findViewById(R.id.finish_activity_button);
-        mStatusImageView = (ImageView) findViewById(R.id.status_image_view);
-        mPriceTextView = (TextView) findViewById(R.id.status_price_text_view);
-        mServiceTypeTextView = (TextView) findViewById(R.id.service_type_text_view);
-        mStatusTypeTextView = (TextView) findViewById(R.id.status_text_type_text_view);
-        mMessageTextView = (TextView) findViewById(R.id.message_text_view);
-        mErrorMessageTextView = (TextView) findViewById(R.id.error_message_text_view);
+        TextView mPaymentIdTextView = (TextView) findViewById(R.id.payment_id_text_view);
+        Button mFinishButton = (Button) findViewById(R.id.finish_activity_button);
+        ImageView mStatusImageView = (ImageView) findViewById(R.id.status_image_view);
+        TextView mPriceTextView = (TextView) findViewById(R.id.status_price_text_view);
+        TextView mServiceTypeTextView = (TextView) findViewById(R.id.service_type_text_view);
+        TextView mStatusTypeTextView = (TextView) findViewById(R.id.status_text_type_text_view);
+        TextView mMessageTextView = (TextView) findViewById(R.id.message_text_view);
+        TextView mErrorMessageTextView = (TextView) findViewById(R.id.error_message_text_view);
 
         mFinishButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,35 +64,38 @@ public class PaymentStatusActivity extends AppCompatActivity {
         });
 
         if (Objects.equals(finalStatus, "successful")) {
-            mPaymentIdTextView.setText("Payment ID : " + finalPaymentID);
+            mPaymentIdTextView.setText(String.format("Payment ID : %s", finalPaymentID));
             mStatusImageView.setBackgroundResource(R.drawable.success);
-            mPriceTextView.setText("\u20B9  " + finalAmount);
-            mServiceTypeTextView.setText(serviceType + " - Water Can");
-            mStatusTypeTextView.setText("Is Successful");
+            mPriceTextView.setText(String.format("₹  %s", finalAmount));
+            mServiceTypeTextView.setText(String.format("%s - Water Can", serviceType));
+            mStatusTypeTextView.setText(R.string.successful_payment_message);
             mStatusTypeTextView.setTextColor(Color.GREEN);
-            mMessageTextView.setText("Thank You For Subscribing. We Will Contact You Soon");
+            mMessageTextView.setText(R.string.thank_you_subscription_message);
             mErrorMessageTextView.setVisibility(View.GONE);
             if (Objects.equals(serviceType, "One Month Subscription")) {
-                Subscriptions subscriptions = new Subscriptions(true, false, false);
-                mDatabaseReference.push().setValue(subscriptions);
+                Log.d(Constants.TAG, "One Month if is executing");
+                mDatabaseReference.child("OneMonthSubscription").setValue(true);
+                mDatabaseReference.child("CanStatus").setValue("0");
             } else if (Objects.equals(serviceType, "Three Months Subscription")) {
-                Subscriptions subscriptions = new Subscriptions(false, true, false);
-                mDatabaseReference.push().setValue(subscriptions);
+                Log.d(Constants.TAG, "Three Months if is executing");
+                mDatabaseReference.child("ThreeMonthSubscription").setValue(true);
+                mDatabaseReference.child("CanStatus").setValue("0");
             } else if (Objects.equals(serviceType, "Six Months Subscription")) {
-                Subscriptions subscriptions = new Subscriptions(false, false, true);
-                mDatabaseReference.push().setValue(subscriptions);
+                Log.d(Constants.TAG, "Six Months if is executing");
+                mDatabaseReference.child("SixMonthSubscription").setValue(true);
+                mDatabaseReference.child("CanStatus").setValue("0");
             } else {
-                Log.e(Constants.TAG, "Invalid Service Type : " + serviceType);
+                Toast.makeText(this, "Something Went Wrong.", Toast.LENGTH_SHORT).show();
             }
         } else if (Objects.equals(finalStatus, "failed")) {
-            mPaymentIdTextView.setText("Payment ID : " + finalPaymentID);
-            mStatusImageView.setBackgroundResource(R.drawable.cross);
-            mPriceTextView.setText("\u20B9  " + finalAmount);
-            mServiceTypeTextView.setText(serviceType + " - Water Can");
-            mStatusTypeTextView.setText("Has Failed");
+            mPaymentIdTextView.setText(String.format("Payment ID : %s", finalPaymentID));
+            mStatusImageView.setBackgroundResource(R.drawable.sad_emoji);
+            mPriceTextView.setText(String.format("₹  %s", finalAmount));
+            mServiceTypeTextView.setText(String.format("%s - Water Can", serviceType));
+            mStatusTypeTextView.setText(R.string.failed_payment_subscription_message);
             mStatusTypeTextView.setTextColor(Color.RED);
             mMessageTextView.setText(finalFailureMessage);
-            mErrorMessageTextView.setText("Please Take A Screen Shot Of This And, Contact Our Customer Care");
+            mErrorMessageTextView.setText(R.string.take_screenshot_message);
             mErrorMessageTextView.setTextColor(Color.RED);
         }
     }

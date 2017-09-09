@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "604136362986-85ip3db3ah2gs2kccuodhucth6eu2vri.apps.googleusercontent.com",
+          "client_id": "604136362986-gojsnt0h4s1fmp5avs07t4nt28s14k7u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "in.desireplace.waytogo",
-            "certificate_hash": "a78d460ede862779d67633e14f48af63b3551691"
+            "certificate_hash": "491af56d03fd43ba0295908bc1b827cfc4f8a852"
           }
         },
         {
@@ -44,6 +44,37 @@
               "client_type": 3
             }
           ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604136362986:android:567cb9ef652fc66a",
+        "android_client_info": {
+          "package_name": "in.desireplace.laundrymerchantapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604136362986-the57bpvdfhaa2qleea3r6jnpufd7f9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpL2aNKcqatIF57MTk9eyUORO-2w0kow0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

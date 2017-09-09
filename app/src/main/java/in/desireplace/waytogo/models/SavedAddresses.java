@@ -7,6 +7,7 @@ public class SavedAddresses {
 
     private String mFullName;
     private String mMobileNumber;
+    private String mEmail;
     private String mHouseNumber;
     private String mLocality;
     private String mLandmark;
@@ -17,9 +18,10 @@ public class SavedAddresses {
         //Required For Data Serializations.
     }
 
-    public SavedAddresses(String fullName, String mobileNumber, String houseNumber, String locality, String landmark) {
+    public SavedAddresses(String fullName, String mobileNumber, String email, String houseNumber, String locality, String landmark) {
         mFullName = fullName;
         mMobileNumber = mobileNumber;
+        mEmail = email;
         mHouseNumber = houseNumber;
         mLocality = locality;
         mLandmark = landmark;
@@ -39,6 +41,14 @@ public class SavedAddresses {
 
     public void setMobileNumber(String mobileNumber) {
         this.mMobileNumber = mobileNumber;
+    }
+
+    public String getEmail() {
+        return mEmail;
+    }
+
+    public void setEmail(String email) {
+        this.mEmail = email;
     }
 
     public String getHouseNumber() {
@@ -77,6 +87,7 @@ public class SavedAddresses {
     public void setValues(SavedAddresses updatedAddress) {
         this.mFullName = updatedAddress.mFullName;
         this.mMobileNumber = updatedAddress.mMobileNumber;
+        this.mEmail = updatedAddress.mEmail;
         this.mHouseNumber = updatedAddress.mHouseNumber;
         this.mLocality = updatedAddress.mLocality;
         this.mLandmark = updatedAddress.mLandmark;

@@ -3,12 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/omniatap"
     tools:context="in.desireplace.waytogo.activities.SplashScreen">
 
-    <ImageView
-        android:layout_width="1080dp"
-        android:layout_height="1843dp"
-        android:contentDescription="SplashScreen"
-        android:src="@drawable/omniatap" />
+    <TextView
+        android:id="@+id/no_internet_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="18dp"
+        tools:text="No Internet, Make Sure You Are Connected"
+        tools:textColor="#FF0000" />
 
 </RelativeLayout>

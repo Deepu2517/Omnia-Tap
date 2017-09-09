@@ -4,28 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.instamojo.android.Instamojo;
 
-import in.desireplace.waytogo.Constants;
-
 public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
+
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private OnCompleteListener<AuthResult> mOnCompleteListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         initializeListeners();
         Instamojo.initialize(this);
@@ -36,20 +28,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                Log.d(Constants.TAG, "User is : " + user);
                 if (user != null) {
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                 } else {
                     switchToLoginActivity();
-                }
-            }
-        };
-        mOnCompleteListener = new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (!task.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
                 }
             }
         };
@@ -59,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        Log.d(Constants.TAG, "Exiting Main Activity");
     }
 
     @Override
@@ -73,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-
 
     @Override
     protected void onStop() {

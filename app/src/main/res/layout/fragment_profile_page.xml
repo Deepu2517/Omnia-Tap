@@ -18,26 +18,27 @@
 
         <ImageView
             android:id="@+id/profile_pic_image_view"
-            android:layout_width="100dp"
+            android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/profile_pic"/>
+            android:contentDescription="@string/profile_picture_description"
+            app:srcCompat="@drawable/profile_pic" />
 
         <TextView
             android:id="@+id/display_name_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="Profile Name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="#fff"/>
+            android:textColor="#fff"
+            tools:text="@string/profile_name_text"/>
 
         <TextView
             android:id="@+id/user_mobile_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="9393781818"
-            android:textColor="#fff"/>
+            android:textColor="#fff"
+            tools:text="9393781818"/>
 
     </LinearLayout>
 
@@ -63,7 +64,7 @@
                 android:background="@color/colorAccent"
                 android:gravity="center_vertical"
                 android:padding="16dp"
-                android:text="Your Orders"
+                android:text="@string/your_orders_text"
                 android:textColor="#fff"
                 android:textSize="18sp"/>
 
@@ -79,7 +80,7 @@
                 android:background="@color/colorAccent"
                 android:gravity="center_vertical"
                 android:padding="16dp"
-                android:text="Saved Addresses"
+                android:text="@string/saved_addresses_text"
                 android:textColor="#fff"
                 android:textSize="18sp"/>
 
@@ -95,7 +96,7 @@
                 android:background="@color/colorAccent"
                 android:gravity="center_vertical"
                 android:padding="16dp"
-                android:text="Notifications"
+                android:text="@string/notifications_text"
                 android:textColor="#fff"
                 android:textSize="18sp"/>
 
@@ -111,7 +112,7 @@
                 android:background="@color/colorAccent"
                 android:gravity="center_vertical"
                 android:padding="16dp"
-                android:text="Customer Care"
+                android:text="@string/customer_care_text"
                 android:textColor="#fff"
                 android:textSize="18sp"/>
 
@@ -127,7 +128,7 @@
                 android:background="@color/colorAccent"
                 android:gravity="center_vertical"
                 android:padding="16dp"
-                android:text="Rate Us"
+                android:text="@string/rate_us_text"
                 android:textColor="#fff"
                 android:textSize="18sp"/>
 
@@ -143,7 +144,7 @@
                 android:background="@color/colorAccent"
                 android:gravity="center_vertical"
                 android:padding="16dp"
-                android:text="Log Out"
+                android:text="@string/log_out_text"
                 android:textColor="#fff"
                 android:textSize="18sp"/>
 

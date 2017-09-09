@@ -49,3 +49,7 @@
 
 # Rules for Instamojo SDK
 -keep class com.instamojo.android.**{*;}
+
+# Rules for Fabric
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable

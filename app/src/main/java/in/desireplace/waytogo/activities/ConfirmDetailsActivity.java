@@ -2,12 +2,17 @@ package in.desireplace.waytogo.activities;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -49,16 +54,12 @@ import okhttp3.Response;
 public class ConfirmDetailsActivity extends AppCompatActivity {
 
     String mServiceType;
-    private TextView mName_TextView, mHouse_no_TextView, mLaundry_TextView, mPhoneNumber_TextView, mService_Type_Laundry_TextView, mService_Type_Water_TextView, mService_Type_Subscription_TextView, mPrice_TextView, mDelivery_Charges_TextView, mTotal_Amount_TextView;
     private EditText mShirts_Laundry_EditText, mTrousers_Laundry_EditText, mOthers_Laundry_EditText, mCans_Water_EditText;
-    private Button mPlace_Order_Laundry_Button, mPlace_Order_Water_Button, mProceed_To_Payment_Button;
-    private LinearLayout mLaundry_LinearLayout, mWater_LinearLayout, mSubscription_LinearLayout;
     private DatabaseReference mDatabaseReference, mReference, mRef;
     private FirebaseAuth mAuth;
     private ProgressDialog dialog;
     private String accessToken = null;
     private String amount = null;
-    private String mRequest;
 
     private static Integer randomInt(Integer low, Integer high) {
         return (int) (Math.floor(Math.random() * (high - low + 1)) + low);
@@ -94,30 +95,29 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
 
         String firebasePath = "users/" + mAuth.getCurrentUser().getUid();
 
-        Log.d(Constants.TAG, orderIdGenerator());
-
         final Calendar calendar = Calendar.getInstance();
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(firebasePath + "/YourOrders");
         mReference = FirebaseDatabase.getInstance().getReference().child("Orders");
         mRef = FirebaseDatabase.getInstance().getReference().child(firebasePath + "/StatusUrl");
 
-        mLaundry_LinearLayout = (LinearLayout) findViewById(R.id.laundry_linear_layout);
-        mWater_LinearLayout = (LinearLayout) findViewById(R.id.water_linear_layout);
-        mSubscription_LinearLayout = (LinearLayout) findViewById(R.id.subscription_linear_layout);
+        LinearLayout mLaundry_LinearLayout = (LinearLayout) findViewById(R.id.laundry_linear_layout);
+        LinearLayout mWater_LinearLayout = (LinearLayout) findViewById(R.id.water_linear_layout);
+        LinearLayout mSubscription_LinearLayout = (LinearLayout) findViewById(R.id.subscription_linear_layout);
 
-        mName_TextView = (TextView) findViewById(R.id.name_text_view);
-        mHouse_no_TextView = (TextView) findViewById(R.id.house_no_locality_text_view);
-        mLaundry_TextView = (TextView) findViewById(R.id.city_pincode_text_view);
-        mPhoneNumber_TextView = (TextView) findViewById(R.id.phone_number_text_view);
+        TextView mName_TextView = (TextView) findViewById(R.id.name_text_view);
+        TextView mHouse_no_TextView = (TextView) findViewById(R.id.house_no_locality_text_view);
+        TextView mLaundry_TextView = (TextView) findViewById(R.id.city_pincode_text_view);
+        TextView mPhoneNumber_TextView = (TextView) findViewById(R.id.phone_number_text_view);
+        TextView mEmail_TextView = (TextView) findViewById(R.id.email_text_view);
 
-        mService_Type_Laundry_TextView = (TextView) findViewById(R.id.selected_service_type_laundry_text_view);
-        mService_Type_Water_TextView = (TextView) findViewById(R.id.selected_service_type_water_text_view);
-        mService_Type_Subscription_TextView = (TextView) findViewById(R.id.selected_service_type_subscription_text_view);
+        TextView mService_Type_Laundry_TextView = (TextView) findViewById(R.id.selected_service_type_laundry_text_view);
+        TextView mService_Type_Water_TextView = (TextView) findViewById(R.id.selected_service_type_water_text_view);
+        TextView mService_Type_Subscription_TextView = (TextView) findViewById(R.id.selected_service_type_subscription_text_view);
 
-        mPrice_TextView = (TextView) findViewById(R.id.price_text_view);
-        mDelivery_Charges_TextView = (TextView) findViewById(R.id.delivery_charges_text_view);
-        mTotal_Amount_TextView = (TextView) findViewById(R.id.amount_payable_text_view);
+        TextView mPrice_TextView = (TextView) findViewById(R.id.price_text_view);
+        TextView mDelivery_Charges_TextView = (TextView) findViewById(R.id.delivery_charges_text_view);
+        TextView mTotal_Amount_TextView = (TextView) findViewById(R.id.amount_payable_text_view);
 
         mShirts_Laundry_EditText = (EditText) findViewById(R.id.shirts_laundry_edit_text);
         mTrousers_Laundry_EditText = (EditText) findViewById(R.id.trousers_edit_text);
@@ -125,16 +125,17 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
 
         mCans_Water_EditText = (EditText) findViewById(R.id.cans_edit_text);
 
-        mPlace_Order_Laundry_Button = (Button) findViewById(R.id.place_order_laundry_button);
-        mPlace_Order_Water_Button = (Button) findViewById(R.id.place_order_water_button);
+        Button mPlace_Order_Laundry_Button = (Button) findViewById(R.id.place_order_laundry_button);
+        Button mPlace_Order_Water_Button = (Button) findViewById(R.id.place_order_water_button);
 
-        mProceed_To_Payment_Button = (Button) findViewById(R.id.proceed_to_payment_button);
+        Button mProceed_To_Payment_Button = (Button) findViewById(R.id.proceed_to_payment_button);
 
         Bundle bundle = getIntent().getExtras();
 
         mServiceType = bundle.getString(Constants.SERVICE_TYPE);
         final String selectedName = bundle.getString(Constants.SELECTED_NAME);
         final String selectedMobileNumber = bundle.getString(Constants.SELECTED_MOBILE_NUMBER);
+        final String selectedEmail = bundle.getString(Constants.SELECTED_EMAIL);
         final String selectedHouseNumber = bundle.getString(Constants.SELECTED_HOUSE_NUMBER);
         final String selectedLocality = bundle.getString(Constants.SELECTED_LOCALITY);
         final String selectedLandmark = bundle.getString(Constants.SELECTED_LANDMARK);
@@ -149,33 +150,39 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                 mHouse_no_TextView.setText(selectedHouseNumber + " " + selectedLocality);
                 mLaundry_TextView.setText(selectedLandmark);
                 mPhoneNumber_TextView.setText(selectedMobileNumber);
+                mEmail_TextView.setText(selectedEmail);
                 mService_Type_Water_TextView.setText(mServiceType);
 
                 mPlace_Order_Water_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.show();
-                        new Handler().postDelayed(new Runnable() {
+                        if (!isNetworkAvailable()) {
+                            Toast.makeText(ConfirmDetailsActivity.this, "No Internet Connection.. Please Connect!!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            dialog.show();
+                            int month = calendar.get(Calendar.MONTH) + 1;
+                            String currentDate = calendar.get(Calendar.DATE) + "/" + month + "/" + calendar.get(Calendar.YEAR);
+                            String currentTime = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND);
 
-                            @Override
-                            public void run() {
-                                String currentDate = calendar.get(Calendar.DATE) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR);
-                                String currentTime = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND);
-                                Log.d(Constants.TAG, currentDate + " " + currentTime);
-                                final YourOrders orders = new YourOrders(orderIdGenerator(), mServiceType, selectedName, selectedMobileNumber, selectedHouseNumber, selectedLocality, selectedLandmark, mCans_Water_EditText.getText().toString(), currentDate, currentTime);
-                                mDatabaseReference.push().setValue(orders, new DatabaseReference.CompletionListener() {
-                                    @Override
-                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                                        mReference.push().setValue(orders);
-                                        dialog.dismiss();
-                                        Toast.makeText(ConfirmDetailsActivity.this, "Order Placed Successfully", Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-                                    }
-                                });
+                            if (!validateCans(mCans_Water_EditText)) {
+                                dialog.dismiss();
+                                Toast.makeText(ConfirmDetailsActivity.this, "Cans Number Is Required", Toast.LENGTH_SHORT).show();
+                                return;
                             }
-                        }, 2000);
+
+                            final YourOrders orders = new YourOrders(orderIdGenerator(), mServiceType, selectedName, selectedMobileNumber, selectedEmail, selectedHouseNumber, selectedLocality, selectedLandmark, mCans_Water_EditText.getText().toString(), currentDate, currentTime);
+                            mDatabaseReference.push().setValue(orders, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                    mReference.push().setValue(orders);
+                                    dialog.dismiss();
+                                    Toast.makeText(ConfirmDetailsActivity.this, "Order Placed Successfully... We Will Contact You Soon.", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(ConfirmDetailsActivity.this, HomeActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
                     }
                 });
                 break;
@@ -187,34 +194,49 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                 mHouse_no_TextView.setText(selectedHouseNumber + " " + selectedLocality);
                 mLaundry_TextView.setText(selectedLandmark);
                 mPhoneNumber_TextView.setText(selectedMobileNumber);
+                mEmail_TextView.setText(selectedEmail);
                 mService_Type_Laundry_TextView.setText(mServiceType);
 
                 mPlace_Order_Laundry_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.show();
-                        new Handler().postDelayed(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                String currentDate = calendar.get(Calendar.DATE) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR);
-                                String currentTime = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND);
-                                Log.d(Constants.TAG, currentDate + " " + currentTime);
-                                final YourOrders orders = new YourOrders(orderIdGenerator(), mServiceType, selectedName, selectedMobileNumber, selectedHouseNumber, selectedLocality, selectedLandmark, mShirts_Laundry_EditText.getText().toString(), mTrousers_Laundry_EditText.getText().toString(), mOthers_Laundry_EditText.getText().toString(), currentDate, currentTime);
-                                Log.d(Constants.TAG, "Shirts : " + mShirts_Laundry_EditText.getText().toString() + " trousers : " + mTrousers_Laundry_EditText.getText().toString() + " others : " + mOthers_Laundry_EditText.getText().toString());
-                                mDatabaseReference.push().setValue(orders, new DatabaseReference.CompletionListener() {
-                                    @Override
-                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                                        mReference.push().setValue(orders);
-                                        dialog.dismiss();
-                                        Toast.makeText(ConfirmDetailsActivity.this, "Order Placed Successfully", Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-                                    }
-                                });
+                        if (!isNetworkAvailable()) {
+                            Toast.makeText(ConfirmDetailsActivity.this, "No Internet Connection.. Please Connect!!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            dialog.show();
+                            int month = calendar.get(Calendar.MONTH) + 1;
+                            String currentDate = calendar.get(Calendar.DATE) + "/" + month + "/" + calendar.get(Calendar.YEAR);
+                            String currentTime = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND);
+                            Log.d(Constants.TAG, currentDate + " " + currentTime);
+                            if (!validateShirts(mShirts_Laundry_EditText)) {
+                                dialog.dismiss();
+                                Toast.makeText(ConfirmDetailsActivity.this, "Shirts Number is Required", Toast.LENGTH_LONG).show();
+                                return;
                             }
-                        }, 2000);
+                            if (!validateTrousers(mTrousers_Laundry_EditText)) {
+                                dialog.dismiss();
+                                Toast.makeText(ConfirmDetailsActivity.this, "Trouser Number is Required", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                            if (!validateOthers(mOthers_Laundry_EditText)) {
+                                dialog.dismiss();
+                                Toast.makeText(ConfirmDetailsActivity.this, "Enter Valid Others Number", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                            final YourOrders orders = new YourOrders(orderIdGenerator(), mServiceType, selectedName, selectedMobileNumber, selectedEmail, selectedHouseNumber, selectedLocality, selectedLandmark, mShirts_Laundry_EditText.getText().toString(), mTrousers_Laundry_EditText.getText().toString(), mOthers_Laundry_EditText.getText().toString(), currentDate, currentTime);
+                            Log.d(Constants.TAG, "Shirts : " + mShirts_Laundry_EditText.getText().toString() + " trousers : " + mTrousers_Laundry_EditText.getText().toString() + " others : " + mOthers_Laundry_EditText.getText().toString());
+                            mDatabaseReference.push().setValue(orders, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                    mReference.push().setValue(orders);
+                                    dialog.dismiss();
+                                    Toast.makeText(ConfirmDetailsActivity.this, "Order Placed Successfully... We Will Contact You Soon.", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(ConfirmDetailsActivity.this, HomeActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
                     }
                 });
 
@@ -232,22 +254,23 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                 mHouse_no_TextView.setText(selectedHouseNumber + " " + selectedLocality);
                 mLaundry_TextView.setText(selectedLandmark);
                 mPhoneNumber_TextView.setText(selectedMobileNumber);
+                mEmail_TextView.setText(selectedEmail);
                 mService_Type_Subscription_TextView.setText(mServiceType);
 
                 if (Objects.equals(mServiceType, "Three Months Subscription")) {
-                    mPrice_TextView.setText("1050/-");
-                    mDelivery_Charges_TextView.setText("Free");
-                    mTotal_Amount_TextView.setText("1050/-");
+                    mPrice_TextView.setText(R.string.three_months_subscription_amount);
+                    mDelivery_Charges_TextView.setText(R.string.delivery_charges_amount);
+                    mTotal_Amount_TextView.setText(R.string.three_months_subscription_amount);
                     amount = "1050.00";
                 } else if (Objects.equals(mServiceType, "Six Months Subscription")) {
-                    mPrice_TextView.setText("2100/-");
-                    mDelivery_Charges_TextView.setText("Free");
-                    mTotal_Amount_TextView.setText("2100/-");
+                    mPrice_TextView.setText(R.string.six_months_subscription_amount);
+                    mDelivery_Charges_TextView.setText(R.string.delivery_charges_amount);
+                    mTotal_Amount_TextView.setText(R.string.six_months_subscription_amount);
                     amount = "2100.00";
                 } else if (Objects.equals(mServiceType, "One Month Subscription")) {
-                    mPrice_TextView.setText("370/-");
-                    mDelivery_Charges_TextView.setText("Free");
-                    mTotal_Amount_TextView.setText("370/-");
+                    mDelivery_Charges_TextView.setText(R.string.delivery_charges_amount);
+                    mPrice_TextView.setText(R.string.one_months_subscription_amount);
+                    mTotal_Amount_TextView.setText(R.string.one_months_subscription_amount);
                     amount = "370.00";
                 }
 
@@ -258,18 +281,65 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                 mProceed_To_Payment_Button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fetchTokenAndTransactionID(selectedName, selectedMobileNumber, mServiceType, amount);
+                        if (!isNetworkAvailable()) {
+                            Toast.makeText(ConfirmDetailsActivity.this, "No Internet Connection.. Please Connect!!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            fetchTokenAndTransactionID(selectedName, selectedMobileNumber, selectedEmail, mServiceType, amount);
+                        }
                     }
                 });
                 Instamojo.setLogLevel(Log.DEBUG);
                 break;
             default:
-                Log.e(Constants.TAG, "Unknown Behaviour:Service Type Received: " + mServiceType);
+                Toast.makeText(this, "Unknown Behaviour: Please Try Again", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
-    private void fetchTokenAndTransactionID(final String name, final String number, final String serviceType, final String amount) {
+    private boolean validateCans(EditText cansEditText) {
+        String cans = cansEditText.getText().toString();
+        if (TextUtils.isEmpty(cans)) {
+            cansEditText.setError("Invalid Can Number.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateShirts(EditText shirtsEditText) {
+        String shirts = shirtsEditText.getText().toString();
+        if (TextUtils.isEmpty(shirts)) {
+            shirtsEditText.setError("Invalid Shirts Number.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateTrousers(EditText trousersEditText) {
+        String trousers = trousersEditText.getText().toString();
+        if (TextUtils.isEmpty(trousers)) {
+            trousersEditText.setError("Invalid Trousers Number.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateOthers(EditText othersEditText) {
+        String others = othersEditText.getText().toString();
+        if (TextUtils.isEmpty(others)) {
+            othersEditText.setError("Invalid Number.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void fetchTokenAndTransactionID(final String name, final String number, final String email, final String serviceType, final String amount) {
         if (!dialog.isShowing()) {
             dialog.show();
         }
@@ -282,7 +352,6 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
         okhttp3.Request request = new okhttp3.Request.Builder()
                 .url(url)
                 .build();
-        Log.d("some", "request is " + request);
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -293,9 +362,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                         if (dialog != null && dialog.isShowing()) {
                             dialog.dismiss();
                         }
-                        showToast("Failed to fetch the Order Tokens");
-                        Log.d("some", call.toString());
-                        Log.d("some", e.getMessage());
+                        showToast("Failed to fetch the Order Tokens, Please Try Again");
                     }
                 });
             }
@@ -306,7 +373,6 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                 String errorMessage = null;
                 String transactionID = null;
                 responseString = response.body().string();
-                Log.d("some", "response is " + responseString);
                 response.body().close();
                 try {
                     JSONObject responseObject = new JSONObject(responseString);
@@ -317,7 +383,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                         transactionID = responseObject.getString("transaction_id");
                     }
                 } catch (JSONException e) {
-                    errorMessage = "Failed to fetch Order tokens";
+                    errorMessage = "Something Went Wrong!! Please Try Again";
                 }
 
                 final String finalErrorMessage = errorMessage;
@@ -334,7 +400,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                             return;
                         }
 
-                        createOrder(accessToken, finalTransactionID, name, number, serviceType, amount);
+                        createOrder(accessToken, finalTransactionID, name, number, email, serviceType, amount);
                     }
                 });
 
@@ -343,24 +409,20 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void createOrder(String accessToken, String transactionID, String name, String phone, String serviceType, String amount) {
+    private void createOrder(String accessToken, String transactionID, String name, String phone, String email, String serviceType, String amount) {
         if (Objects.equals(serviceType, "One Month Subscription")) {
-            //TODO : change amount
-            amount = "10.00";
+            amount = "370.00";
         } else if (Objects.equals(serviceType, "Three Months Subscription")) {
             amount = "1050.00";
         } else if (Objects.equals(serviceType, "Six Months Subscription")) {
             amount = "2100.00";
         } else {
-            Log.d(Constants.TAG, "( VALUES RECEIVED ) :- SERVICE TYPE : " + serviceType + " AMOUNT : " + amount);
             Toast.makeText(this, "Something Went Wrong... Please Try Again!!", Toast.LENGTH_LONG).show();
             finish();
         }
-        Log.d(Constants.TAG, "amount is " + amount);
-        Order order = new Order(accessToken, transactionID, name, mAuth.getCurrentUser().getEmail(), phone, amount, "Water Can " + serviceType);
+        Order order = new Order(accessToken, transactionID, name, email, phone, amount, "Water Can " + serviceType);
 
         if (!order.isValid()) {
-            //oops order validation failed. Pinpoint the issue(s).
 
             if (!order.isValidName()) {
                 Toast.makeText(this, "Buyer name is invalid", Toast.LENGTH_LONG).show();
@@ -396,7 +458,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
             return;
         }
 
-        //Validation is successful. Proceed
+
         dialog.show();
         Request request = new Request(order, new OrderRequestCallBack() {
             @Override
@@ -411,13 +473,12 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                             } else if (error instanceof Errors.ServerError) {
                                 showToast("Server Error. Try again");
                             } else if (error instanceof Errors.AuthenticationError) {
-                                showToast("Access token is invalid or expired. Please Update the token!!");
+                                showToast("Something went wrong! Please Try again");
                             } else if (error instanceof Errors.ValidationError) {
-                                // Cast object to validation to pinpoint the issue
                                 Errors.ValidationError validationError = (Errors.ValidationError) error;
 
                                 if (!validationError.isValidTransactionID()) {
-                                    showToast("Transaction ID is not Unique");
+                                    showToast("Transaction ID is not Unique, Please Try Again.");
                                     return;
                                 }
 
@@ -478,7 +539,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
     private HttpUrl.Builder getHttpURLBuilder() {
         return new HttpUrl.Builder()
                 .scheme("http")
-                .host("omniatap.eu-4.evennode.com");
+                .host("insta.eu-4.evennode.com");
     }
 
     @Override
@@ -505,7 +566,10 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
      */
     private void checkPaymentStatus(final String transactionID, final String orderID, final String serviceType) {
         if (accessToken == null || (transactionID == null && orderID == null)) {
-            return;
+            Toast.makeText(this, "Please Contact Our Customer Service", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ConfirmDetailsActivity.this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
 
         if (dialog != null && !dialog.isShowing()) {
@@ -524,9 +588,7 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
         okhttp3.Request request = new okhttp3.Request.Builder()
                 .url(url)
                 .build();
-        Log.d("some", "request is " + request);
-        mRequest = request.toString();
-        Log.d("some", "request after converted to string is " + mRequest);
+        String mRequest = request.toString();
         mRef.push().setValue(mRequest);
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -537,7 +599,20 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                         if (dialog != null && dialog.isShowing()) {
                             dialog.dismiss();
                         }
-                        showToast("Failed to fetch the Transaction status");
+                        new AlertDialog.Builder(ConfirmDetailsActivity.this)
+                                .setTitle("Payment Error!")
+                                .setMessage("Failed to fetch the Transaction status.. Please Contact Our Customer Care")
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(ConfirmDetailsActivity.this, HomeActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }
+                                })
+                                .create()
+                                .show();
+
                     }
                 });
             }
@@ -546,7 +621,6 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseString = response.body().string();
-                Log.d("some", "response is " + responseString);
                 response.body().close();
                 String status = null;
                 String paymentID = null;
@@ -563,18 +637,14 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                     if (!Objects.equals(status, "successful")) {
                         failure = payment.getString("failure");
                     }
-                    Log.d("some", "failure is " + failure);
                     paymentID = payment.getString("id");
                     amount = responseObject.getString("amount");
-                    Log.d("some", "status : " + status + "\n" + "paymentID : " + paymentID + "\n" + "amount : " + amount);
                     JSONObject failureJSONObject = payment.getJSONObject("failure");
                     reason = failureJSONObject.getString("reason");
                     message = failureJSONObject.getString("message");
-                    Log.d("some", "reason : " + reason + "\n" + "message : " + message);
 
                 } catch (JSONException e) {
-                    errorMessage = "Failed to fetch the Transaction status";
-                    Log.d("some", "error : " + e.toString());
+                    errorMessage = "Failed to fetch the Transaction status, Please Contact Our Customer Service";
                 }
 
                 final String finalFailure = failure;
@@ -592,7 +662,9 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                         }
                         if (finalStatus == null) {
                             showToast(finalErrorMessage);
-                            return;
+                            Intent intent = new Intent(ConfirmDetailsActivity.this, HomeActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
                         }
                         Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentStatusActivity.class);
                         Bundle bundle = new Bundle();
@@ -619,7 +691,6 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
         for (int start = 0; start < uid.length(); start += 6) {
             ret.add(uid.substring(start, Math.min(uid.length(), start + 6)));
         }
-        Log.d(Constants.TAG, "RET is :" + ret);
         return ret;
     }
 
@@ -630,6 +701,6 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
 
     private String orderIdGenerator() {
         String src = "abcdefghijklmnopqrstuvwxyz";
-        return "OM" + generateUid().get(0) + generateRandSeq(3, src) + generateRandNum();
+        return "OT" + generateUid().get(0) + generateRandSeq(3, src) + generateRandNum();
     }
 }
